@@ -18,3 +18,10 @@ services = {
     "googletypes_service_returns_empty",
     "googletypes_service_returns_googletype",
 }
+
+
+# Indicate json sample messages to skip when testing that json (de)serialization
+# is symmetrical becuase some cases legitimately are not symmetrical.
+# For tuple in the set, the first value is the name of the test and the second is
+# the name of the json file.
+non_symmetrical_json = {("empty_repeated", "empty_repeated")}
