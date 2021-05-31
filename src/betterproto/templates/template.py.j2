@@ -91,8 +91,9 @@ class {{ service.py_name }}Stub(betterproto.ServiceStub):
                                             {%- else -%}
                                                 None
                                             {% endif -%}
-                    {%- if not loop.last %}, {% endif -%}
+                    ,
                 {%- endfor -%}
+                timeout: Optional[float] = None,
             {%- endif -%}
         {%- else -%}
             {# Client streaming: need a request iterator instead #}
@@ -149,7 +150,10 @@ class {{ service.py_name }}Stub(betterproto.ServiceStub):
         return await self._unary_unary(
             "{{ method.route }}",
             request,
-            {{ method.py_output_message_type.strip('"') }}
+            {{ method.py_output_message_type.strip('"') }},
+            {%- if not method.client_streaming and method.py_input_message and method.py_input_message.fields -%}
+            timeout=timeout
+            {%- endif -%}
         )
             {% endif %}{# client streaming #}
         {% endif %}

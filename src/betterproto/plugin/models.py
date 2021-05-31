@@ -400,8 +400,7 @@ class FieldCompiler(MessageCompiler):
     def typing_imports(self) -> Set[str]:
         imports = set()
         annotation = self.annotation
-        if "Optional[" in annotation:
-            imports.add("Optional")
+        imports.add("Optional")
         if "List[" in annotation:
             imports.add("List")
         if "Dict[" in annotation:
